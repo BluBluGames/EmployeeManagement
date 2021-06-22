@@ -38,5 +38,10 @@ namespace EmployeeManagement.Repositories
         {
             return await _context.Employees.AnyAsync(e => e.Pesel == pesel);
         }
+
+        public async Task<Employee> GetEmployeeByIdAsync(int id)
+        {
+            return await _context.Employees.FindAsync(id);
+        }
     }
 }

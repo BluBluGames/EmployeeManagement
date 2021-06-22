@@ -12,6 +12,6 @@ namespace EmployeeManagement.Repositories
         Task<List<string>> GetAllRegistrationNumbers();
         Task<Employee> CreateEmployeeAsync(Employee employee);
         Task<bool> CheckIfPeselExistsInDb(string pesel);
-
+        Task<Employee> GetEmployeeByIdAsync(int id);
     }
 }

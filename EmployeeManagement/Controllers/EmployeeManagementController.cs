@@ -30,6 +30,15 @@ namespace EmployeeManagement.Controllers
             return result != null ? Ok(result) : NotFound();
         }
 
+        [HttpGet]
+        [Route("GetEmployeeById/{employeeId}")]
+        public async Task<IActionResult> GetEmployeeById(int employeeId)
+        {
+            var query = new GetEmployeeByIdQuery(employeeId);
+            var result = await _mediator.Send(query);
+            return result != null ? Ok(result) : NotFound();
+        }
+
         [HttpPost]
         [Route("CreateEmployee")]
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeCommand command)
