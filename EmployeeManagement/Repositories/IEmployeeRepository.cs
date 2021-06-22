@@ -14,5 +14,9 @@ namespace EmployeeManagement.Repositories
         Task<bool> CheckIfPeselExistsInDb(string pesel);
         Task<Employee> GetEmployeeByIdAsync(int id);
         Task<bool> RemoveEmployeeByIdAsync(Employee id);
+        Task<bool> CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId);
+        Task<bool> CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId);
+        Task<Employee> UpdateEmployee(Employee employee);
+
     }
 }

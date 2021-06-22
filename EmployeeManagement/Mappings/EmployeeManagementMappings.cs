@@ -15,6 +15,7 @@ namespace EmployeeManagement.Mappings
         {
             CreateMap<Employee, EmployeeModel>();
             CreateMap<CreateEmployeeCommand, Employee>();
+            CreateMap<UpdateEmployeeCommand, Employee>();
         }
     }
 }

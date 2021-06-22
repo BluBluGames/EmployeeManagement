@@ -42,7 +42,7 @@ namespace EmployeeManagement.Repositories
 
         public async Task<Employee> GetEmployeeByIdAsync(int id)
         {
-            return await _context.Employees.FindAsync(id);
+            return await _context.Employees.AsNoTracking().FirstOrDefaultAsync(e=>e.EmployeeId == id);
         }
 
         public async Task<bool> RemoveEmployeeByIdAsync(Employee employee)
@@ -58,6 +58,27 @@ namespace EmployeeManagement.Repositories
             }
 
             return true;
+        }
+
+        public async Task<bool> CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId)
+        {
+            return await _context.Employees
+                .Where(e => e.RegistrationNumber == requestRegistrationNumber && e.EmployeeId != currentEmployeeId)
+                .AnyAsync();
+        }
+
+        public async Task<bool> CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId)
+        {
+            return await _context.Employees
+                .Where(e => e.Pesel == requestPesel && e.EmployeeId != currentEmployeeId)
+                .AnyAsync();
+        }
+
+        public async Task<Employee> UpdateEmployee(Employee employee)
+        {
+            _context.Entry(employee).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return employee;
         }
     }
 }

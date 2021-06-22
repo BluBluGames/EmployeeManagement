@@ -46,6 +46,18 @@ namespace EmployeeManagement.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpPut]
+        [Route("EditEmployee")]
+        public async Task<IActionResult> EditEmployee([FromBody] UpdateEmployeeCommand command)
+        {
+            if (command == null)
+                return BadRequest();
+
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [HttpDelete]
         [Route("RemoveEmployee/{employeeId}")]
         public async Task<IActionResult> RemoveEmployee(int employeeId)
