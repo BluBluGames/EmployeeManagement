@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="PipelineBehaviours\" />
     <Folder Include="Validation\" />
-    <Folder Include="Services\EmployeeManagement\Commands\" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeManagement.Services.EmployeeManagement.Commands;
 using EmployeeManagement.Services.EmployeeManagement.Queries;
 using MediatR;
 
@@ -27,6 +28,14 @@ namespace EmployeeManagement.Controllers
             var query = new GetAllEmployeesQuery();
             var result = await _mediator.Send(query);
             return result != null ? Ok(result) : NotFound();
+        }
+
+        [HttpPost]
+        [Route("CreateEmployee")]
+        public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
     }

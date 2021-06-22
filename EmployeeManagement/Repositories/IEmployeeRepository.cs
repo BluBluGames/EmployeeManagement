@@ -9,5 +9,9 @@ namespace EmployeeManagement.Repositories
     public interface IEmployeeRepository
     {
         Task<IEnumerable<Employee>> GetAllEmployeesAsync();
+        Task<List<string>> GetAllRegistrationNumbers();
+        Task<Employee> CreateEmployeeAsync(Employee employee);
+        Task<bool> CheckIfPeselExistsInDb(string pesel);
+
     }
 }

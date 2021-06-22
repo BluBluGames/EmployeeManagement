@@ -21,5 +21,22 @@ namespace EmployeeManagement.Repositories
         {
             return await _context.Employees.ToListAsync();
         }
+
+        public async Task<List<string>> GetAllRegistrationNumbers()
+        {
+            return await _context.Employees.Select(e=>e.RegistrationNumber).ToListAsync();
+        }
+
+        public async Task<Employee> CreateEmployeeAsync(Employee employee)
+        {
+            await _context.AddAsync(employee);
+            await _context.SaveChangesAsync();
+            return employee;
+        }
+
+        public async Task<bool> CheckIfPeselExistsInDb(string pesel)
+        {
+            return await _context.Employees.AnyAsync(e => e.Pesel == pesel);
+        }
     }
 }
