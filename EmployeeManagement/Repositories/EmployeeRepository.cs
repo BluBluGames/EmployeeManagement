@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EmployeeManagement.DbContexts;
 using EmployeeManagement.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
 
 namespace EmployeeManagement.Repositories
 {
@@ -42,6 +43,21 @@ namespace EmployeeManagement.Repositories
         public async Task<Employee> GetEmployeeByIdAsync(int id)
         {
             return await _context.Employees.FindAsync(id);
+        }
+
+        public async Task<bool> RemoveEmployeeByIdAsync(Employee employee)
+        {
+            try
+            {
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

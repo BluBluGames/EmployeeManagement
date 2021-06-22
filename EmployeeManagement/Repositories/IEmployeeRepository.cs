@@ -13,5 +13,6 @@ namespace EmployeeManagement.Repositories
         Task<Employee> CreateEmployeeAsync(Employee employee);
         Task<bool> CheckIfPeselExistsInDb(string pesel);
         Task<Employee> GetEmployeeByIdAsync(int id);
+        Task<bool> RemoveEmployeeByIdAsync(Employee id);
     }
 }
