@@ -35,9 +35,19 @@ namespace EmployeeManagement.Repositories
             return employee;
         }
 
-        public async Task<bool> CheckIfPeselExistsInDb(string pesel)
+        public Employee GetEmployeeById(int id)
         {
-            return await _context.Employees.AnyAsync(e => e.Pesel == pesel);
+            return _context.Employees.AsNoTracking().FirstOrDefault(e => e.EmployeeId == id);
+        }
+
+        public bool CheckIfPeselExistsInDb(string pesel)
+        {
+            return _context.Employees.Any(e => e.Pesel == pesel);
+        }
+
+        public bool CheckIfEmployeeExists(int id)
+        {
+            return _context.Employees.Any(e => e.EmployeeId == id);
         }
 
         public async Task<Employee> GetEmployeeByIdAsync(int id)
@@ -60,18 +70,16 @@ namespace EmployeeManagement.Repositories
             return true;
         }
 
-        public async Task<bool> CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId)
+        public bool CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId)
         {
-            return await _context.Employees
-                .Where(e => e.RegistrationNumber == requestRegistrationNumber && e.EmployeeId != currentEmployeeId)
-                .AnyAsync();
+            return _context.Employees
+                .Any(e => e.RegistrationNumber == requestRegistrationNumber && e.EmployeeId != currentEmployeeId);
         }
 
-        public async Task<bool> CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId)
+        public bool CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId)
         {
-            return await _context.Employees
-                .Where(e => e.Pesel == requestPesel && e.EmployeeId != currentEmployeeId)
-                .AnyAsync();
+            return _context.Employees
+                .Any(e => e.Pesel == requestPesel && e.EmployeeId != currentEmployeeId);
         }
 
         public async Task<Employee> UpdateEmployee(Employee employee)

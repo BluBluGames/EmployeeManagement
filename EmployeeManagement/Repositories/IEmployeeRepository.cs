@@ -11,12 +11,13 @@ namespace EmployeeManagement.Repositories
         Task<IEnumerable<Employee>> GetAllEmployeesAsync();
         Task<List<string>> GetAllRegistrationNumbers();
         Task<Employee> CreateEmployeeAsync(Employee employee);
-        Task<bool> CheckIfPeselExistsInDb(string pesel);
+        Employee GetEmployeeById(int id);
         Task<Employee> GetEmployeeByIdAsync(int id);
         Task<bool> RemoveEmployeeByIdAsync(Employee id);
-        Task<bool> CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId);
-        Task<bool> CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId);
+        bool CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId);
+        bool CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId);
         Task<Employee> UpdateEmployee(Employee employee);
-
+        bool CheckIfPeselExistsInDb(string pesel);
+        bool CheckIfEmployeeExists(int id);
     }
 }

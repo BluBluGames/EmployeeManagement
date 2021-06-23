@@ -25,26 +25,7 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 
         public async Task<EmployeeModel> Handle(UpdateEmployeeCommand command, CancellationToken cancellationToken)
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(command.EmployeeId);
-
-            if (employee == null) return default;
-
-            if (employee.RegistrationNumber != command.RegistrationNumber)
-            {
-                var isRegistrationNumberPresentOnDifferentEmployee =
-                    await _employeeRepository.CheckIfRegistrationNumberExistsOnDifferentEmployee(
-                        command.RegistrationNumber, employee.EmployeeId);
-                if (isRegistrationNumberPresentOnDifferentEmployee) return default;
-            }
-
-            if (employee.Pesel != command.Pesel)
-            {
-                var isPeselPresentOnDifferentEmployee =
-                    await _employeeRepository.CheckIfPeselExistsOnDifferentEmployee(command.Pesel, employee.EmployeeId);
-                if (isPeselPresentOnDifferentEmployee) return default;
-            }
-
-            employee = _mapper.Map<UpdateEmployeeCommand, Employee>(command);
+            var employee = _mapper.Map<UpdateEmployeeCommand, Employee>(command);
             var updatedEmployee = await _employeeRepository.UpdateEmployee(employee);
             return _mapper.Map<Employee, EmployeeModel>(updatedEmployee);
         }

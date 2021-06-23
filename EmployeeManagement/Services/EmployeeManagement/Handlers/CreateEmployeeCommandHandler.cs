@@ -25,14 +25,11 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 
         public async Task<EmployeeModel> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var isPeselInDb = await _employeeRepository.CheckIfPeselExistsInDb(request.Pesel);
-            if (isPeselInDb)
-                return default;
-
             var newRegistrationNumber = await SetNewRegistrationNumber();
 
             var employee = _mapper.Map<CreateEmployeeCommand, Employee>(request);
             employee.RegistrationNumber = newRegistrationNumber;
+
             var createdEmployee = await _employeeRepository.CreateEmployeeAsync(employee);
             return _mapper.Map<Employee, EmployeeModel>(createdEmployee);
         }

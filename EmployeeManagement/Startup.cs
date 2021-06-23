@@ -12,7 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.DbContexts;
+using EmployeeManagement.PipelineBehaviors;
 using EmployeeManagement.Repositories;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +37,8 @@ namespace EmployeeManagement
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddMediatR(typeof(Startup));
             services.AddAutoMapper(typeof(Startup));
+            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
