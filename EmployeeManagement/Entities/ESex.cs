@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EmployeeManagement.Entities
+﻿namespace EmployeeManagement.Entities
 {
     public enum ESex
     {
-        Male, Female
+        Male,
+        Female
     }
 }

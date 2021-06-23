@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using EmployeeManagement.DbContexts;
 using EmployeeManagement.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Any;
 
 namespace EmployeeManagement.Repositories
 {
@@ -23,9 +22,9 @@ namespace EmployeeManagement.Repositories
             return await _context.Employees.ToListAsync();
         }
 
-        public async Task<List<string>> GetAllRegistrationNumbers()
+        public async Task<List<string>> GetAllRegistrationNumbersAsync()
         {
-            return await _context.Employees.Select(e=>e.RegistrationNumber).ToListAsync();
+            return await _context.Employees.Select(e => e.RegistrationNumber).ToListAsync();
         }
 
         public async Task<Employee> CreateEmployeeAsync(Employee employee)
@@ -52,7 +51,7 @@ namespace EmployeeManagement.Repositories
 
         public async Task<Employee> GetEmployeeByIdAsync(int id)
         {
-            return await _context.Employees.AsNoTracking().FirstOrDefaultAsync(e=>e.EmployeeId == id);
+            return await _context.Employees.AsNoTracking().FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
 
         public async Task<bool> RemoveEmployeeByIdAsync(Employee employee)
@@ -69,7 +68,8 @@ namespace EmployeeManagement.Repositories
             }
         }
 
-        public bool CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId)
+        public bool CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber,
+            int currentEmployeeId)
         {
             return _context.Employees
                 .Any(e => e.RegistrationNumber == requestRegistrationNumber && e.EmployeeId != currentEmployeeId);

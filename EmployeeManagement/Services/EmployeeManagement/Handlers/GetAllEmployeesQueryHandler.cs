@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -22,6 +20,7 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
             _employeeRepository = employeeRepository;
             _mapper = mapper;
         }
+
         public async Task<List<EmployeeModel>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
         {
             var employees = await _employeeRepository.GetAllEmployeesAsync();

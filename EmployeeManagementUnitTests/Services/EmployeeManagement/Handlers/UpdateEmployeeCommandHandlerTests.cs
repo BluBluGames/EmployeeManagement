@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,7 +12,7 @@ using NUnit.Framework;
 
 namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
 {
-    class UpdateEmployeeCommandHandlerTests
+    internal class UpdateEmployeeCommandHandlerTests
     {
         private UpdateEmployeeCommandHandler _sut;
         private Mock<IEmployeeRepository> _repositoryMock;
@@ -33,7 +30,8 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
 
         [Test]
         [TestCase("Banner", "Bruce", "00000001", "99110111111", ESex.Male)]
-        public async Task UpdateEmployeeTest_Correct(string expSurname, string expName, string expRegistrationNumber, string expPesel, ESex expSex)
+        public async Task UpdateEmployeeTest_Correct(string expSurname, string expName, string expRegistrationNumber,
+            string expPesel, ESex expSex)
         {
             UpdateEmployeeCommand updateCommand;
             SetMocks();
@@ -78,6 +76,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                         Sex = ESex.Male
                     });
             }
+
             void MakeAssertions()
             {
                 Assert.AreEqual(result.Name, expName);
@@ -87,6 +86,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                 Assert.AreEqual(result.Sex, expSex);
             }
         }
+
         [Test]
         public async Task UpdateEmployeeTest_Correct_EmployeeDoesntExist()
         {
@@ -108,11 +108,11 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                     Sex = ESex.Male
                 };
             }
+
             void MakeAssertions()
             {
                 Assert.Null(result);
             }
         }
-
     }
 }

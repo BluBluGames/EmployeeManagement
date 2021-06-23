@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EmployeeManagement.Repositories;
+﻿using EmployeeManagement.Repositories;
 using EmployeeManagement.Services.EmployeeManagement.Commands;
-using EmployeeManagement.Services.EmployeeManagement.Queries;
 using FluentValidation;
 
 namespace EmployeeManagement.Services.EmployeeManagement.Validators
@@ -44,7 +39,8 @@ namespace EmployeeManagement.Services.EmployeeManagement.Validators
             RuleFor(x => x.Name).NotEmpty().MinimumLength(1).MaximumLength(25);
             RuleFor(x => x.Surname).NotEmpty().MinimumLength(1).MaximumLength(50);
             RuleFor(x => x.BirthDate).NotEmpty();
-            RuleFor(x => x.RegistrationNumber).NotEmpty().Length(8).Matches(@"^[\d]{8}$"); ;
+            RuleFor(x => x.RegistrationNumber).NotEmpty().Length(8).Matches(@"^[\d]{8}$");
+            ;
         }
     }
 }

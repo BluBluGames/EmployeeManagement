@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EmployeeManagement.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +7,8 @@ namespace EmployeeManagement.DbContexts
     public class EmployeesDbContext : DbContext
     {
         public EmployeesDbContext(DbContextOptions<EmployeesDbContext> options) : base(options)
-        { }
+        {
+        }
 
         public DbSet<Employee> Employees { get; set; }
 

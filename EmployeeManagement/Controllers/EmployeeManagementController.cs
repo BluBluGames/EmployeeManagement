@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EmployeeManagement.Services.EmployeeManagement.Commands;
 using EmployeeManagement.Services.EmployeeManagement.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
 {
@@ -34,7 +30,7 @@ namespace EmployeeManagement.Controllers
         [Route("GetEmployeeById/{employeeId}")]
         public async Task<IActionResult> GetEmployeeById(int employeeId)
         {
-            var query = new GetEmployeeByIdQuery(employeeId);
+            var query = new GetEmployeeByIdQuery {Id = employeeId};
             var result = await _mediator.Send(query);
             return result != null ? Ok(result) : NotFound();
         }

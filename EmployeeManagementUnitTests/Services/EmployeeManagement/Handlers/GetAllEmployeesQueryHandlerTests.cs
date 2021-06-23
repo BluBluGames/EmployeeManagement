@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,7 +13,7 @@ using NUnit.Framework;
 
 namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
 {
-    class GetAllEmployeesQueryHandlerTests
+    internal class GetAllEmployeesQueryHandlerTests
     {
         private GetAllEmployeesQueryHandler _sut;
         private Mock<IEmployeeRepository> _repositoryMock;
@@ -98,7 +96,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         {
             return new()
             {
-                new()
+                new EmployeeModel
                 {
                     RegistrationNumber = "00000001",
                     Pesel = "80122412456",
@@ -106,7 +104,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                     Surname = "Stark",
                     Name = "Tony"
                 },
-                new()
+                new EmployeeModel()
                 {
                     RegistrationNumber = "00000002",
                     Pesel = "90122412456",

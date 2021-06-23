@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using EmployeeManagement.Entities;
@@ -13,7 +10,7 @@ using NUnit.Framework;
 
 namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
 {
-    class RemoveEmployeeCommandHandlerTests
+    internal class RemoveEmployeeCommandHandlerTests
     {
         private RemoveEmployeeCommandHandler _sut;
         private Mock<IEmployeeRepository> _repositoryMock;
@@ -31,7 +28,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         public async Task RemoveEmployeeById_Correct()
         {
             SetMocks();
-            var result = await _sut.Handle(new RemoveEmployeeCommand { Id = It.IsAny<int>() }, _cts.Token);
+            var result = await _sut.Handle(new RemoveEmployeeCommand {Id = It.IsAny<int>()}, _cts.Token);
             MakeAssertions();
 
             void SetMocks()
@@ -49,7 +46,8 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                         Sex = ESex.Male
                     }).Result);
                 _repositoryMock
-                    .Setup(r => r.RemoveEmployeeByIdAsync(It.IsAny<Employee>())).ReturnsAsync(Task.FromResult(true).Result);
+                    .Setup(r => r.RemoveEmployeeByIdAsync(It.IsAny<Employee>()))
+                    .ReturnsAsync(Task.FromResult(true).Result);
             }
 
             void MakeAssertions()
@@ -62,7 +60,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         public async Task RemoveEmployeeById_GuidNotInDb()
         {
             SetMocks();
-            var result = await _sut.Handle(new RemoveEmployeeCommand{ Id = It.IsAny<int>() }, _cts.Token);
+            var result = await _sut.Handle(new RemoveEmployeeCommand {Id = It.IsAny<int>()}, _cts.Token);
             MakeAssertions();
 
             void SetMocks()
@@ -76,7 +74,5 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                 Assert.False(result);
             }
         }
-
-
     }
 }

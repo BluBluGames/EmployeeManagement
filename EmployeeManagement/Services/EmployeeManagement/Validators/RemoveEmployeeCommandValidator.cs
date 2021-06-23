@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EmployeeManagement.Repositories;
+﻿using EmployeeManagement.Repositories;
 using EmployeeManagement.Services.EmployeeManagement.Commands;
 using FluentValidation;
 

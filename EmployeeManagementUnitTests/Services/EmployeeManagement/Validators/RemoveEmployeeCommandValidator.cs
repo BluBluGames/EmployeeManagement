@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EmployeeManagement.Entities;
+﻿using EmployeeManagement.Entities;
 using EmployeeManagement.Repositories;
 using EmployeeManagement.Services.EmployeeManagement.Commands;
 using EmployeeManagement.Services.EmployeeManagement.Validators;
@@ -13,18 +8,19 @@ using NUnit.Framework;
 
 namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
 {
-    class RemoveEmployeeCommandValidatorTests
+    internal class RemoveEmployeeCommandValidatorTests
     {
         private RemoveEmployeeCommandValidator _sut;
         private Mock<IEmployeeRepository> _repositoryMock;
 
         [SetUp]
-        public void OneTimeSetup()
+        public void Setup()
         {
             _repositoryMock = new Mock<IEmployeeRepository>();
 
             _sut = new RemoveEmployeeCommandValidator(_repositoryMock.Object);
         }
+
         [Test]
         public void VerifyThatCorrectDataIsPassed()
         {
@@ -41,7 +37,8 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
         }
 
         [Test]
-        [TestCase("123456789123", "123456789123456789123456789123456789123456789123456789", "123456789123456789123456789", 8)]
+        [TestCase("123456789123", "123456789123456789123456789123456789123456789123456789",
+            "123456789123456789123456789", 8)]
         public void VerifyThatIncorrectDataIsNotPassed(string pesel, string surname, string name, ESex sex)
         {
             _repositoryMock

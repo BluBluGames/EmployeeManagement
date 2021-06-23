@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,7 +12,7 @@ using NUnit.Framework;
 
 namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
 {
-    class GetEmployeeByIdQueryHandlerTests
+    internal class GetEmployeeByIdQueryHandlerTests
     {
         private GetEmployeeByIdQueryHandler _sut;
         private Mock<IEmployeeRepository> _repositoryMock;
@@ -38,7 +35,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         {
             SetMocks();
 
-            var result = await _sut.Handle(new GetEmployeeByIdQuery(It.IsAny<int>()), _cts.Token);
+            var result = await _sut.Handle(new GetEmployeeByIdQuery { Id = 1 }, _cts.Token);
             MakeAssertions();
 
             void SetMocks()
@@ -82,7 +79,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         public async Task GetEmployeeByIdTest_GuidNotInDb()
         {
             SetMocks();
-            var result = await _sut.Handle(new GetEmployeeByIdQuery(It.IsAny<int>()), _cts.Token);
+            var result = await _sut.Handle(new GetEmployeeByIdQuery {Id = 1}, _cts.Token);
             MakeAssertions();
 
             void SetMocks()

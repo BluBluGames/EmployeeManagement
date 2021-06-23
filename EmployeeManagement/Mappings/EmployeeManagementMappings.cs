@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EmployeeManagement.Entities;
 using EmployeeManagement.Models;
 using EmployeeManagement.Services.EmployeeManagement.Commands;

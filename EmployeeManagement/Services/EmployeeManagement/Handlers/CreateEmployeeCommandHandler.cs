@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,9 +35,14 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 
         private async Task<string> SetNewRegistrationNumber()
         {
-            var registrationNumbers = await _employeeRepository.GetAllRegistrationNumbers();
-            var nextNumber = registrationNumbers.Where(x => int.TryParse(x, out _)).Max(x => Convert.ToInt32(x));
+            var registrationNumbers = await _employeeRepository.GetAllRegistrationNumbersAsync();
+            int nextNumber;
+            if (registrationNumbers.Any())
+                nextNumber = registrationNumbers.Where(x => int.TryParse(x, out _)).Max(x => Convert.ToInt32(x));
+            else
+                nextNumber = 0;
             nextNumber++;
+
             return $"{nextNumber:00000000}";
         }
     }
