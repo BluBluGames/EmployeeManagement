@@ -8,11 +8,6 @@ namespace EmployeeManagement.Services.EmployeeManagement.Commands
 {
     public class RemoveEmployeeCommand : IRequest<bool>
     {
-        public int Id { get; }
-
-        public RemoveEmployeeCommand(int id)
-        {
-            Id = id;
-        }
+        public int Id { get; set; }
     }
 }

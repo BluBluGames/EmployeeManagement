@@ -62,8 +62,12 @@ namespace EmployeeManagement.Controllers
         [Route("RemoveEmployee/{employeeId}")]
         public async Task<IActionResult> RemoveEmployee(int employeeId)
         {
-            var query = new RemoveEmployeeCommand(employeeId);
-            var result = await _mediator.Send(query);
+            var command = new RemoveEmployeeCommand
+            {
+                Id = employeeId
+            };
+
+            var result = await _mediator.Send(command);
             return result ? Ok() : BadRequest();
         }
     }

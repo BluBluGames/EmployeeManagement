@@ -22,7 +22,6 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
         {
             var employee = await _employeeRepository.GetEmployeeByIdAsync(command.Id);
             if (employee == null) return false;
-
             return await _employeeRepository.RemoveEmployeeByIdAsync(employee);
         }
     }

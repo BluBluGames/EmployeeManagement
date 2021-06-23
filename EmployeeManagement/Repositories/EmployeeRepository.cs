@@ -61,13 +61,12 @@ namespace EmployeeManagement.Repositories
             {
                 _context.Employees.Remove(employee);
                 await _context.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
-
-            return true;
         }
 
         public bool CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber, int currentEmployeeId)
