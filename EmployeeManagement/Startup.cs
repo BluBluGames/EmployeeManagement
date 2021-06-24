@@ -1,4 +1,5 @@
 using EmployeeManagement.DbContexts;
+using EmployeeManagement.Extensions;
 using EmployeeManagement.PipelineBehaviors;
 using EmployeeManagement.Repositories;
 using FluentValidation;
@@ -54,6 +55,8 @@ namespace EmployeeManagement
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseFluentValidationExceptionHandler();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
