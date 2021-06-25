@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Domain.Employees;
+using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
 using EmployeeManagement.Services.EmployeeManagement.Handlers;
 using Moq;
 using NUnit.Framework;
@@ -28,22 +29,22 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         public async Task RemoveEmployeeById_Correct()
         {
             SetMocks();
-            var result = await _sut.Handle(new RemoveEmployeeCommand {Id = It.IsAny<int>()}, _cts.Token);
+            var result = await _sut.Handle(new RemoveEmployeeCommand {Id = It.IsAny<Guid>()}, _cts.Token);
             MakeAssertions();
 
             void SetMocks()
             {
                 _repositoryMock
-                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<int>()))
+                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<Guid>()))
                     .ReturnsAsync(Task.FromResult(new Employee
                     {
-                        EmployeeId = 1,
-                        RegistrationNumber = "00000001",
-                        Pesel = "80122412456",
-                        BirthDate = DateTime.Today,
-                        Surname = "Stark",
-                        Name = "Tony",
-                        Sex = ESex.Male
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000001"),
+                        Pesel = EmployeePesel.From("80122412456"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Stark"),
+                        Name = EmployeeName.From("Tony"),
+                        Sex = EmployeeSex.From(ESex.Male)
                     }).Result);
                 _repositoryMock
                     .Setup(r => r.RemoveEmployeeByIdAsync(It.IsAny<Employee>()))
@@ -60,13 +61,13 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         public async Task RemoveEmployeeById_GuidNotInDb()
         {
             SetMocks();
-            var result = await _sut.Handle(new RemoveEmployeeCommand {Id = It.IsAny<int>()}, _cts.Token);
+            var result = await _sut.Handle(new RemoveEmployeeCommand {Id = It.IsAny<Guid>()}, _cts.Token);
             MakeAssertions();
 
             void SetMocks()
             {
                 _repositoryMock
-                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<int>()));
+                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<Guid>()));
             }
 
             void MakeAssertions()

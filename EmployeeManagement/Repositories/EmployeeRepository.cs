@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.DbContexts;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Domain.Employees;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Repositories
@@ -24,7 +24,7 @@ namespace EmployeeManagement.Repositories
 
         public async Task<List<string>> GetAllRegistrationNumbersAsync()
         {
-            return await _context.Employees.Select(e => e.RegistrationNumber).ToListAsync();
+            return await _context.Employees.Select(e => e.RegistrationNumber.Value).ToListAsync();
         }
 
         public async Task<Employee> CreateEmployeeAsync(Employee employee)
@@ -34,22 +34,22 @@ namespace EmployeeManagement.Repositories
             return employee;
         }
 
-        public Employee GetEmployeeById(int id)
+        public Employee GetEmployeeById(Guid id)
         {
             return _context.Employees.AsNoTracking().FirstOrDefault(e => e.EmployeeId == id);
         }
 
         public bool CheckIfPeselExistsInDb(string pesel)
         {
-            return _context.Employees.Any(e => e.Pesel == pesel);
+            return _context.Employees.Any(e => e.Pesel.Value == pesel);
         }
 
-        public bool CheckIfEmployeeExists(int id)
+        public bool CheckIfEmployeeExists(Guid id)
         {
             return _context.Employees.Any(e => e.EmployeeId == id);
         }
 
-        public async Task<Employee> GetEmployeeByIdAsync(int id)
+        public async Task<Employee> GetEmployeeByIdAsync(Guid id)
         {
             return await _context.Employees.AsNoTracking().FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
@@ -69,21 +69,21 @@ namespace EmployeeManagement.Repositories
         }
 
         public bool CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber,
-            int currentEmployeeId)
+            Guid currentEmployeeId)
         {
             return _context.Employees
-                .Any(e => e.RegistrationNumber == requestRegistrationNumber && e.EmployeeId != currentEmployeeId);
+                .Any(e => e.RegistrationNumber.Value == requestRegistrationNumber && e.EmployeeId != currentEmployeeId);
         }
 
-        public bool CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId)
+        public bool CheckIfPeselExistsOnDifferentEmployee(string requestPesel, Guid currentEmployeeId)
         {
             return _context.Employees
-                .Any(e => e.Pesel == requestPesel && e.EmployeeId != currentEmployeeId);
+                .Any(e => e.Pesel.Value == requestPesel && e.EmployeeId != currentEmployeeId);
         }
 
         public async Task<Employee> UpdateEmployee(Employee employee)
         {
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.Update(employee);
             await _context.SaveChangesAsync();
             return employee;
         }

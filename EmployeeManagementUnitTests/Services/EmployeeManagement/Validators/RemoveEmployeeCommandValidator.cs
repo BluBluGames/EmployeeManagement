@@ -1,7 +1,8 @@
-﻿using EmployeeManagement.Entities;
+﻿using System;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Validators;
+using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
-using EmployeeManagement.Services.EmployeeManagement.Validators;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
@@ -25,12 +26,12 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
         public void VerifyThatCorrectDataIsPassed()
         {
             _repositoryMock
-                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<int>()))
+                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<Guid>()))
                 .Returns(true);
 
             var command = new RemoveEmployeeCommand
             {
-                Id = 1
+                Id = Guid.NewGuid()
             };
 
             _sut.ShouldNotHaveValidationErrorFor(r => r.Id, command.Id);
@@ -42,12 +43,12 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
         public void VerifyThatIncorrectDataIsNotPassed(string pesel, string surname, string name, ESex sex)
         {
             _repositoryMock
-                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<int>()))
+                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<Guid>()))
                 .Returns(false);
 
             var command = new RemoveEmployeeCommand
             {
-                Id = 1
+                Id = Guid.NewGuid()
             };
 
             _sut.ShouldHaveValidationErrorFor(r => r.Id, command.Id);

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Domain.Employees;
 
 namespace EmployeeManagement.Repositories
 {
@@ -9,16 +10,16 @@ namespace EmployeeManagement.Repositories
         Task<IEnumerable<Employee>> GetAllEmployeesAsync();
         Task<List<string>> GetAllRegistrationNumbersAsync();
         Task<Employee> CreateEmployeeAsync(Employee employee);
-        Employee GetEmployeeById(int id);
-        Task<Employee> GetEmployeeByIdAsync(int id);
-        Task<bool> RemoveEmployeeByIdAsync(Employee id);
+        Employee GetEmployeeById(Guid id);
+        Task<Employee> GetEmployeeByIdAsync(Guid id);
+        Task<bool> RemoveEmployeeByIdAsync(Employee employee);
 
         bool CheckIfRegistrationNumberExistsOnDifferentEmployee(string requestRegistrationNumber,
-            int currentEmployeeId);
+            Guid currentEmployeeId);
 
-        bool CheckIfPeselExistsOnDifferentEmployee(string requestPesel, int currentEmployeeId);
+        bool CheckIfPeselExistsOnDifferentEmployee(string requestPesel, Guid currentEmployeeId);
         Task<Employee> UpdateEmployee(Employee employee);
         bool CheckIfPeselExistsInDb(string pesel);
-        bool CheckIfEmployeeExists(int id);
+        bool CheckIfEmployeeExists(Guid id);
     }
 }

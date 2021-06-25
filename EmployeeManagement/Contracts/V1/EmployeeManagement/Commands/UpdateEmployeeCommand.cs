@@ -1,12 +1,14 @@
 ﻿using System;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Models;
 using MediatR;
 
-namespace EmployeeManagement.Services.EmployeeManagement.Commands
+namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Commands
 {
-    public class CreateEmployeeCommand : IRequest<EmployeeModel>
+    public class UpdateEmployeeCommand : IRequest<EmployeeResponse>
     {
+        public Guid EmployeeId { get; set; }
+        public string RegistrationNumber { get; set; }
         public string Pesel { get; set; }
         public DateTime BirthDate { get; set; }
         public string Surname { get; set; }

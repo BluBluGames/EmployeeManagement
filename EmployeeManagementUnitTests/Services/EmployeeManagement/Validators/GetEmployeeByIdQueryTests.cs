@@ -1,6 +1,7 @@
-﻿using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Queries;
-using EmployeeManagement.Services.EmployeeManagement.Validators;
+﻿using System;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Validators;
+using EmployeeManagement.Repositories;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
@@ -23,7 +24,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
         {
             var query = new GetEmployeeByIdQuery
             {
-                Id = 1
+                Id = Guid.NewGuid()
             };
 
             _sut.ShouldNotHaveValidationErrorFor(r => r.Id, query.Id);

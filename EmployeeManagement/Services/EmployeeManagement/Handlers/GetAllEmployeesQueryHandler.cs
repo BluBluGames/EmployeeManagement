@@ -2,15 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
+using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Queries;
 using MediatR;
 
 namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 {
-    public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, List<EmployeeModel>>
+    public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, List<EmployeeResponse>>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
             _mapper = mapper;
         }
 
-        public async Task<List<EmployeeModel>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
+        public async Task<List<EmployeeResponse>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
         {
             var employees = await _employeeRepository.GetAllEmployeesAsync();
 
-            return employees == null ? null : _mapper.Map<IEnumerable<Employee>, List<EmployeeModel>>(employees);
+            return employees == null ? null : _mapper.Map<IEnumerable<Employee>, List<EmployeeResponse>>(employees);
         }
     }
 }

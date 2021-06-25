@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Domain.Employees;
+using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
 using EmployeeManagement.Services.EmployeeManagement.Handlers;
 using Moq;
 using NUnit.Framework;
@@ -61,33 +62,33 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                     .Setup(r => r.CreateEmployeeAsync(It.IsAny<Employee>()))
                     .ReturnsAsync(Task.FromResult(new Employee
                     {
-                        EmployeeId = 1,
-                        RegistrationNumber = "00000005",
-                        Pesel = "99110111111",
-                        BirthDate = DateTime.Today,
-                        Surname = "Banner",
-                        Name = "Bruce",
-                        Sex = ESex.Male
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000005"),
+                        Pesel = EmployeePesel.From("99110111111"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Banner"),
+                        Name = EmployeeName.From("Bruce"),
+                        Sex = EmployeeSex.From(ESex.Male)
                     }).Result);
 
                 _mapper
                     .Setup(m => m.Map<CreateEmployeeCommand, Employee>(It.IsAny<CreateEmployeeCommand>()))
                     .Returns(new Employee
                     {
-                        EmployeeId = 0,
-                        RegistrationNumber = "00000000",
-                        Pesel = "99110111111",
-                        BirthDate = DateTime.Today,
-                        Surname = "Banner",
-                        Name = "Bruce",
-                        Sex = ESex.Male
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000000"),
+                        Pesel = EmployeePesel.From("99110111111"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Banner"),
+                        Name = EmployeeName.From("Bruce"),
+                        Sex = EmployeeSex.From(ESex.Male),
                     });
 
                 _mapper
-                    .Setup(m => m.Map<Employee, EmployeeModel>(It.IsAny<Employee>()))
-                    .Returns(new EmployeeModel
+                    .Setup(m => m.Map<Employee, EmployeeResponse>(It.IsAny<Employee>()))
+                    .Returns(new EmployeeResponse
                     {
-                        EmployeeId = 1,
+                        EmployeeId = Guid.NewGuid(),
                         RegistrationNumber = "00000005",
                         Pesel = "99110111111",
                         BirthDate = DateTime.Today,
@@ -136,33 +137,33 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                     .Setup(r => r.CreateEmployeeAsync(It.IsAny<Employee>()))
                     .ReturnsAsync(Task.FromResult(new Employee
                     {
-                        EmployeeId = 1,
-                        RegistrationNumber = "00000001",
-                        Pesel = "99110111111",
-                        BirthDate = DateTime.Today,
-                        Surname = "Banner",
-                        Name = "Bruce",
-                        Sex = ESex.Male
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000001"),
+                        Pesel = EmployeePesel.From("99110111111"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Banner"),
+                        Name = EmployeeName.From("Bruce"),
+                        Sex = EmployeeSex.From(ESex.Male),
                     }).Result);
 
                 _mapper
                     .Setup(m => m.Map<CreateEmployeeCommand, Employee>(It.IsAny<CreateEmployeeCommand>()))
                     .Returns(new Employee
                     {
-                        EmployeeId = 0,
-                        RegistrationNumber = "00000000",
-                        Pesel = "99110111111",
-                        BirthDate = DateTime.Today,
-                        Surname = "Banner",
-                        Name = "Bruce",
-                        Sex = ESex.Male
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000000"),
+                        Pesel = EmployeePesel.From("99110111111"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Banner"),
+                        Name = EmployeeName.From("Bruce"),
+                        Sex = EmployeeSex.From(ESex.Male)
                     });
 
                 _mapper
-                    .Setup(m => m.Map<Employee, EmployeeModel>(It.IsAny<Employee>()))
-                    .Returns(new EmployeeModel
+                    .Setup(m => m.Map<Employee, EmployeeResponse>(It.IsAny<Employee>()))
+                    .Returns(new EmployeeResponse
                     {
-                        EmployeeId = 1,
+                        EmployeeId = Guid.NewGuid(),
                         RegistrationNumber = "00000001",
                         Pesel = "99110111111",
                         BirthDate = DateTime.Today,

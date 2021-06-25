@@ -3,15 +3,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Domain.Employees;
+using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
 using MediatR;
 
 namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 {
-    public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, EmployeeModel>
+    public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, EmployeeResponse>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
@@ -22,18 +23,17 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
             _mapper = mapper;
         }
 
-        public async Task<EmployeeModel> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<EmployeeResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var newRegistrationNumber = await SetNewRegistrationNumber();
-
             var employee = _mapper.Map<CreateEmployeeCommand, Employee>(request);
-            employee.RegistrationNumber = newRegistrationNumber;
 
+            await employee.GenerateRegistrationNumber(_employeeRepository);
             var createdEmployee = await _employeeRepository.CreateEmployeeAsync(employee);
-            return _mapper.Map<Employee, EmployeeModel>(createdEmployee);
+
+            return _mapper.Map<Employee, EmployeeResponse>(createdEmployee);
         }
 
-        private async Task<string> SetNewRegistrationNumber()
+        private async Task<EmployeeRegistrationNumber> SetNewRegistrationNumber()
         {
             var registrationNumbers = await _employeeRepository.GetAllRegistrationNumbersAsync();
             int nextNumber;
@@ -43,7 +43,7 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
                 nextNumber = 0;
             nextNumber++;
 
-            return $"{nextNumber:00000000}";
+            return EmployeeRegistrationNumber.From($"{nextNumber:00000000}");
         }
     }
 }

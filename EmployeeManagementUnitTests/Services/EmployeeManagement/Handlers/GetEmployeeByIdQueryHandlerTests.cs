@@ -2,11 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
+using EmployeeManagement.Domain.Employees;
+using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
 using EmployeeManagement.Services.EmployeeManagement.Handlers;
-using EmployeeManagement.Services.EmployeeManagement.Queries;
 using Moq;
 using NUnit.Framework;
 
@@ -35,26 +36,26 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         {
             SetMocks();
 
-            var result = await _sut.Handle(new GetEmployeeByIdQuery { Id = 1 }, _cts.Token);
+            var result = await _sut.Handle(new GetEmployeeByIdQuery { Id = Guid.NewGuid() }, _cts.Token);
             MakeAssertions();
 
             void SetMocks()
             {
                 _repositoryMock
-                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<int>()))
+                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<Guid>()))
                     .ReturnsAsync(Task.FromResult(new Employee
                     {
-                        EmployeeId = 1,
-                        RegistrationNumber = "00000001",
-                        Pesel = "80122412456",
-                        BirthDate = DateTime.Today,
-                        Surname = "Stark",
-                        Name = "Tony",
-                        Sex = ESex.Male
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000001"),
+                        Pesel = EmployeePesel.From("80122412456"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Stark"),
+                        Name = EmployeeName.From("Tony"),
+                        Sex = EmployeeSex.From(ESex.Male)
                     }).Result);
                 _mapper
-                    .Setup(m => m.Map<Employee, EmployeeModel>(It.IsAny<Employee>()))
-                    .Returns(new EmployeeModel
+                    .Setup(m => m.Map<Employee, EmployeeResponse>(It.IsAny<Employee>()))
+                    .Returns(new EmployeeResponse
                     {
                         RegistrationNumber = "00000001",
                         Pesel = "80122412456",
@@ -79,15 +80,15 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
         public async Task GetEmployeeByIdTest_GuidNotInDb()
         {
             SetMocks();
-            var result = await _sut.Handle(new GetEmployeeByIdQuery {Id = 1}, _cts.Token);
+            var result = await _sut.Handle(new GetEmployeeByIdQuery {Id = Guid.NewGuid()}, _cts.Token);
             MakeAssertions();
 
             void SetMocks()
             {
                 _repositoryMock
-                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<int>()));
+                    .Setup(r => r.GetEmployeeByIdAsync(It.IsAny<Guid>()));
                 _mapper
-                    .Setup(m => m.Map<Employee, EmployeeModel>(It.IsAny<Employee>()));
+                    .Setup(m => m.Map<Employee, EmployeeResponse>(It.IsAny<Employee>()));
             }
 
             void MakeAssertions()

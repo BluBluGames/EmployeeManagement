@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
+using EmployeeManagement.Domain.Employees;
+using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
 using EmployeeManagement.Services.EmployeeManagement.Handlers;
-using EmployeeManagement.Services.EmployeeManagement.Queries;
 using Moq;
 using NUnit.Framework;
 
@@ -34,29 +35,29 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                 {
                     new()
                     {
-                        EmployeeId = 1,
-                        RegistrationNumber = "00000001",
-                        Pesel = "80122412456",
-                        BirthDate = DateTime.Today,
-                        Surname = "Stark",
-                        Name = "Tony",
-                        Sex = ESex.Male
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000001"),
+                        Pesel = EmployeePesel.From("80122412456"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Stark"),
+                        Name = EmployeeName.From("Tony"),
+                        Sex = EmployeeSex.From(ESex.Male)
                     },
                     new()
                     {
-                        EmployeeId = 2,
-                        RegistrationNumber = "00000002",
-                        Pesel = "90122412456",
-                        BirthDate = DateTime.Today,
-                        Surname = "Romanoff",
-                        Name = "Natasha",
-                        Sex = ESex.Female
+                        EmployeeId = Guid.NewGuid(),
+                        RegistrationNumber = EmployeeRegistrationNumber.From("00000002"),
+                        Pesel = EmployeePesel.From("90122412456"),
+                        BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                        Surname = EmployeeSurname.From("Romanoff"),
+                        Name = EmployeeName.From("Natasha"),
+                        Sex = EmployeeSex.From(ESex.Female)
                     }
                 }).Result);
 
             _mapper
-                .Setup(m => m.Map<IEnumerable<Employee>, List<EmployeeModel>>(It.IsAny<List<Employee>>()))
-                .Returns(new List<EmployeeModel>
+                .Setup(m => m.Map<IEnumerable<Employee>, List<EmployeeResponse>>(It.IsAny<List<Employee>>()))
+                .Returns(new List<EmployeeResponse>
                 {
                     new()
                     {
@@ -92,11 +93,11 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
             }
         }
 
-        private List<EmployeeModel> SetExpectedValues()
+        private List<EmployeeResponse> SetExpectedValues()
         {
             return new()
             {
-                new EmployeeModel
+                new EmployeeResponse
                 {
                     RegistrationNumber = "00000001",
                     Pesel = "80122412456",
@@ -104,7 +105,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Handlers
                     Surname = "Stark",
                     Name = "Tony"
                 },
-                new EmployeeModel()
+                new EmployeeResponse()
                 {
                     RegistrationNumber = "00000002",
                     Pesel = "90122412456",

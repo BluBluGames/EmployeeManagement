@@ -1,7 +1,7 @@
-﻿using EmployeeManagement.Services.EmployeeManagement.Queries;
+﻿using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
 using FluentValidation;
 
-namespace EmployeeManagement.Services.EmployeeManagement.Validators
+namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Validators
 {
     public class GetEmployeeByIdQueryValidator : AbstractValidator<GetEmployeeByIdQuery>
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Validators;
+using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
-using EmployeeManagement.Services.EmployeeManagement.Validators;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;

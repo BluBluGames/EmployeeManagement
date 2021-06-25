@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
 using MediatR;
 
 namespace EmployeeManagement.Services.EmployeeManagement.Handlers

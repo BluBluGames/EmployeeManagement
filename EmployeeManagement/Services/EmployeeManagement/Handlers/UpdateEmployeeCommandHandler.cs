@@ -1,15 +1,15 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
 using MediatR;
 
 namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 {
-    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, EmployeeModel>
+    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, EmployeeResponse>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
@@ -20,11 +20,11 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
             _mapper = mapper;
         }
 
-        public async Task<EmployeeModel> Handle(UpdateEmployeeCommand command, CancellationToken cancellationToken)
+        public async Task<EmployeeResponse> Handle(UpdateEmployeeCommand command, CancellationToken cancellationToken)
         {
             var employee = _mapper.Map<UpdateEmployeeCommand, Employee>(command);
             var updatedEmployee = await _employeeRepository.UpdateEmployee(employee);
-            return _mapper.Map<Employee, EmployeeModel>(updatedEmployee);
+            return _mapper.Map<Employee, EmployeeResponse>(updatedEmployee);
         }
     }
 }

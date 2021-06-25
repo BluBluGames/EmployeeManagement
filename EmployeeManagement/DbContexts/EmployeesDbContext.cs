@@ -1,5 +1,6 @@
 ﻿using System;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Domain.Employees;
+using EmployeeManagement.Domain.Employees.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.DbContexts
@@ -15,42 +16,37 @@ namespace EmployeeManagement.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()
-                .HasIndex(e => e.RegistrationNumber)
-                .IsUnique();
+                .OwnsOne(e => e.Pesel, a => a.Property(p => p.Value)
+                    .HasColumnName("Pesel")
+                    .IsRequired());
             modelBuilder.Entity<Employee>()
-                .HasIndex(e => e.Pesel)
-                .IsUnique();
+                .OwnsOne(e => e.BirthDate, a => a.Property(p => p.Value)
+                    .HasColumnName("BirthDate")
+                    .IsRequired());
+            modelBuilder.Entity<Employee>()
+                .OwnsOne(e => e.Name, a => a.Property(p => p.Value)
+                    .HasColumnName("Name")
+                    .IsRequired());
+            modelBuilder.Entity<Employee>()
+                .OwnsOne(e => e.RegistrationNumber, a => a.Property(p => p.Value)
+                    .HasColumnName("RegistrationNumber")
+                    .IsRequired());
+            modelBuilder.Entity<Employee>()
+                .OwnsOne(e => e.Sex, a => a.Property(p => p.Value)
+                    .HasColumnName("Sex")
+                    .IsRequired());
+            modelBuilder.Entity<Employee>()
+                .OwnsOne(e => e.Surname, a => a.Property(p => p.Value)
+                    .HasColumnName("Surname")
+                    .IsRequired());
 
-            modelBuilder.Entity<Employee>().HasData(new Employee
-            {
-                EmployeeId = 1,
-                RegistrationNumber = "00000001",
-                Pesel = "54092397111",
-                BirthDate = new DateTime(2015, 12, 25),
-                Surname = "Stark",
-                Name = "Tony",
-                Sex = ESex.Male
-            });
-            modelBuilder.Entity<Employee>().HasData(new Employee
-            {
-                EmployeeId = 2,
-                RegistrationNumber = "00000002",
-                Pesel = "90102826611",
-                BirthDate = new DateTime(1988, 03, 09),
-                Surname = "Banner",
-                Name = "Bruce",
-                Sex = ESex.Male
-            });
-            modelBuilder.Entity<Employee>().HasData(new Employee
-            {
-                EmployeeId = 3,
-                RegistrationNumber = "00000003",
-                Pesel = "38100948214",
-                BirthDate = new DateTime(1975, 05, 12),
-                Surname = "Storm",
-                Name = "Sue",
-                Sex = ESex.Female
-            });
+            modelBuilder.Entity<Employee>()
+                .OwnsOne(e => e.Pesel, a => a.HasIndex(p => p.Value)
+                    .IsUnique());
+            modelBuilder.Entity<Employee>()
+                .OwnsOne(e => e.RegistrationNumber, a => a.HasIndex(p => p.Value)
+                    .IsUnique());
+
         }
     }
 }

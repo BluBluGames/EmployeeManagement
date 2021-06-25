@@ -1,8 +1,9 @@
 ﻿using System;
-using EmployeeManagement.Entities;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Contracts.V1.EmployeeManagement.Validators;
+using EmployeeManagement.Domain.Employees;
+using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Commands;
-using EmployeeManagement.Services.EmployeeManagement.Validators;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
@@ -26,30 +27,30 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
         public void VerifyThatCorrectDataIsPassed()
         {
             _repositoryMock
-                .Setup(r => r.GetEmployeeById(It.IsAny<int>()))
+                .Setup(r => r.GetEmployeeById(It.IsAny<Guid>()))
                 .Returns(new Employee
                 {
-                    EmployeeId = 1,
-                    RegistrationNumber = "00000001",
-                    Pesel = "80122412456",
-                    BirthDate = DateTime.Today,
-                    Surname = "Stark",
-                    Name = "Tony",
-                    Sex = ESex.Male
+                    EmployeeId = Guid.NewGuid(),
+                    RegistrationNumber = EmployeeRegistrationNumber.From("80122412456"),
+                    Pesel = EmployeePesel.From("99110111111"),
+                    BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                    Surname = EmployeeSurname.From("Stark"),
+                    Name = EmployeeName.From("Tony"),
+                    Sex = EmployeeSex.From(ESex.Male)
                 });
             _repositoryMock
-                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<int>()))
+                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<Guid>()))
                 .Returns(true);
             _repositoryMock
-                .Setup(r => r.CheckIfRegistrationNumberExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(r => r.CheckIfRegistrationNumberExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<Guid>()))
                 .Returns(false);
             _repositoryMock
-                .Setup(r => r.CheckIfPeselExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(r => r.CheckIfPeselExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<Guid>()))
                 .Returns(false);
 
             var command = new UpdateEmployeeCommand
             {
-                EmployeeId = 1,
+                EmployeeId = Guid.NewGuid(),
                 RegistrationNumber = "00000001",
                 Pesel = "12345678912",
                 BirthDate = DateTime.Now,
@@ -72,30 +73,30 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
         public void VerifyThatIncorrectDataIsNotPassed(string pesel, string surname, string name, ESex sex)
         {
             _repositoryMock
-                .Setup(r => r.GetEmployeeById(It.IsAny<int>()))
+                .Setup(r => r.GetEmployeeById(It.IsAny<Guid>()))
                 .Returns(new Employee
                 {
-                    EmployeeId = 1,
-                    RegistrationNumber = "00000001",
-                    Pesel = "80122412456",
-                    BirthDate = DateTime.Today,
-                    Surname = "Stark",
-                    Name = "Tony",
-                    Sex = ESex.Male
+                    EmployeeId = Guid.NewGuid(),
+                    RegistrationNumber = EmployeeRegistrationNumber.From("80122412456"),
+                    Pesel = EmployeePesel.From("99110111111"),
+                    BirthDate = EmployeeBirthDate.From(DateTime.Today),
+                    Surname = EmployeeSurname.From("Stark"),
+                    Name = EmployeeName.From("Tony"),
+                    Sex = EmployeeSex.From(ESex.Male)
                 });
             _repositoryMock
-                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<int>()))
+                .Setup(r => r.CheckIfEmployeeExists(It.IsAny<Guid>()))
                 .Returns(false);
             _repositoryMock
-                .Setup(r => r.CheckIfRegistrationNumberExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(r => r.CheckIfRegistrationNumberExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<Guid>()))
                 .Returns(true);
             _repositoryMock
-                .Setup(r => r.CheckIfPeselExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<int>()))
+                .Setup(r => r.CheckIfPeselExistsOnDifferentEmployee(It.IsAny<string>(), It.IsAny<Guid>()))
                 .Returns(true);
 
             var command = new UpdateEmployeeCommand
             {
-                EmployeeId = 1,
+                EmployeeId = Guid.NewGuid(),
                 RegistrationNumber = "00000001",
                 Pesel = pesel,
                 BirthDate = DateTime.Now,
