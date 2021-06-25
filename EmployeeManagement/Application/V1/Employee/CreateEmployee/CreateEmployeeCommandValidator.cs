@@ -1,8 +1,7 @@
-﻿using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
-using EmployeeManagement.Repositories;
+﻿using EmployeeManagement.Repositories;
 using FluentValidation;
 
-namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Validators
+namespace EmployeeManagement.Application.V1.Employee.CreateEmployee
 {
     public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommand>
     {
@@ -11,7 +10,7 @@ namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Validators
         public CreateEmployeeCommandValidator(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
-
+            
             RuleFor(x => x.Pesel).NotEmpty().Length(11).Matches(@"^[\d]{11}$")
                 .Must(pesel => !_employeeRepository.CheckIfPeselExistsInDb(pesel)).WithMessage("Pesel esists in database");
             RuleFor(x => x.Name).NotEmpty().MinimumLength(1).MaximumLength(25);

@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Commands
+namespace EmployeeManagement.Application.V1.Employee.RemoveEmployee
 {
     public class RemoveEmployeeCommand : IRequest<bool>
     {

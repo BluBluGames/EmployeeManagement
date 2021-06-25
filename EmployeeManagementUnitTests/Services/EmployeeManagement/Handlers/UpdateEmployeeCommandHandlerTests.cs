@@ -2,12 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Application.V1.Employee.UpdateEmployee;
 using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Handlers;
 using Moq;
 using NUnit.Framework;
 

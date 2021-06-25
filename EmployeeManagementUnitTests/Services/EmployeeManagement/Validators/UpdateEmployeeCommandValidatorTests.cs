@@ -1,6 +1,5 @@
 ﻿using System;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Validators;
+using EmployeeManagement.Application.V1.Employee.UpdateEmployee;
 using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Repositories;
@@ -31,7 +30,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
                 .Returns(new Employee
                 {
                     EmployeeId = Guid.NewGuid(),
-                    RegistrationNumber = EmployeeRegistrationNumber.From("80122412456"),
+                    RegistrationNumber = EmployeeRegistrationNumber.From("12345678"),
                     Pesel = EmployeePesel.From("99110111111"),
                     BirthDate = EmployeeBirthDate.From(DateTime.Today),
                     Surname = EmployeeSurname.From("Stark"),
@@ -77,7 +76,7 @@ namespace EmployeeManagementUnitTests.Services.EmployeeManagement.Validators
                 .Returns(new Employee
                 {
                     EmployeeId = Guid.NewGuid(),
-                    RegistrationNumber = EmployeeRegistrationNumber.From("80122412456"),
+                    RegistrationNumber = EmployeeRegistrationNumber.From("12345678"),
                     Pesel = EmployeePesel.From("99110111111"),
                     BirthDate = EmployeeBirthDate.From(DateTime.Today),
                     Surname = EmployeeSurname.From("Stark"),

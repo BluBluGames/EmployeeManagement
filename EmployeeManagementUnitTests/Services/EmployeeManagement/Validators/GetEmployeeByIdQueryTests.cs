@@ -1,6 +1,5 @@
 ﻿using System;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Validators;
+using EmployeeManagement.Application.V1.Employee.GetEmployee;
 using EmployeeManagement.Repositories;
 using FluentValidation.TestHelper;
 using Moq;

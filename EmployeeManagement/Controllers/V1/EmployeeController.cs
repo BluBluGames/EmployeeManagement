@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EmployeeManagement.Application.V1.Employee.CreateEmployee;
+using EmployeeManagement.Application.V1.Employee.GetAllEmployees;
+using EmployeeManagement.Application.V1.Employee.GetEmployee;
+using EmployeeManagement.Application.V1.Employee.RemoveEmployee;
+using EmployeeManagement.Application.V1.Employee.UpdateEmployee;
 using EmployeeManagement.Contracts.V1;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

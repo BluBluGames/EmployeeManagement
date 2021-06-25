@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Application.V1.Employee.RemoveEmployee;
 using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Repositories;
-using EmployeeManagement.Services.EmployeeManagement.Handlers;
 using Moq;
 using NUnit.Framework;
 

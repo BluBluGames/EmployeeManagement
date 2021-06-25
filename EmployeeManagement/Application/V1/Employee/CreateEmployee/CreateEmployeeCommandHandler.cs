@@ -3,14 +3,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
-using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Domain.Employees.ValueObjects;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
 using MediatR;
 
-namespace EmployeeManagement.Services.EmployeeManagement.Handlers
+namespace EmployeeManagement.Application.V1.Employee.CreateEmployee
 {
     public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, EmployeeResponse>
     {
@@ -25,12 +23,12 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 
         public async Task<EmployeeResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employee = _mapper.Map<CreateEmployeeCommand, Employee>(request);
+            var employee = _mapper.Map<CreateEmployeeCommand, Domain.Employees.Employee>(request);
 
             await employee.GenerateRegistrationNumber(_employeeRepository);
             var createdEmployee = await _employeeRepository.CreateEmployeeAsync(employee);
 
-            return _mapper.Map<Employee, EmployeeResponse>(createdEmployee);
+            return _mapper.Map<Domain.Employees.Employee, EmployeeResponse>(createdEmployee);
         }
 
         private async Task<EmployeeRegistrationNumber> SetNewRegistrationNumber()

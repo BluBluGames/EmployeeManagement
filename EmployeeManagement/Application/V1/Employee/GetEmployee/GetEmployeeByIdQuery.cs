@@ -2,7 +2,7 @@
 using EmployeeManagement.Models;
 using MediatR;
 
-namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Queries
+namespace EmployeeManagement.Application.V1.Employee.GetEmployee
 {
     public class GetEmployeeByIdQuery : IRequest<EmployeeResponse>
     {

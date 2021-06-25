@@ -3,7 +3,7 @@ using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Models;
 using MediatR;
 
-namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Commands
+namespace EmployeeManagement.Application.V1.Employee.UpdateEmployee
 {
     public class UpdateEmployeeCommand : IRequest<EmployeeResponse>
     {

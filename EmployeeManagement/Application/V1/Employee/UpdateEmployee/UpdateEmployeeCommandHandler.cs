@@ -1,13 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
-using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
 using MediatR;
 
-namespace EmployeeManagement.Services.EmployeeManagement.Handlers
+namespace EmployeeManagement.Application.V1.Employee.UpdateEmployee
 {
     public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, EmployeeResponse>
     {
@@ -22,9 +20,9 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
 
         public async Task<EmployeeResponse> Handle(UpdateEmployeeCommand command, CancellationToken cancellationToken)
         {
-            var employee = _mapper.Map<UpdateEmployeeCommand, Employee>(command);
+            var employee = _mapper.Map<UpdateEmployeeCommand, Domain.Employees.Employee>(command);
             var updatedEmployee = await _employeeRepository.UpdateEmployee(employee);
-            return _mapper.Map<Employee, EmployeeResponse>(updatedEmployee);
+            return _mapper.Map<Domain.Employees.Employee, EmployeeResponse>(updatedEmployee);
         }
     }
 }

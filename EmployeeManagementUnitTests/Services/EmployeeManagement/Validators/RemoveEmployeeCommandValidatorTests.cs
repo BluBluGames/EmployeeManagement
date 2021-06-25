@@ -1,6 +1,5 @@
 ﻿using System;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Validators;
+using EmployeeManagement.Application.V1.Employee.RemoveEmployee;
 using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Repositories;
 using FluentValidation.TestHelper;

@@ -1,8 +1,7 @@
-﻿using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
-using EmployeeManagement.Repositories;
+﻿using EmployeeManagement.Repositories;
 using FluentValidation;
 
-namespace EmployeeManagement.Contracts.V1.EmployeeManagement.Validators
+namespace EmployeeManagement.Application.V1.Employee.RemoveEmployee
 {
     public class RemoveEmployeeCommandValidator : AbstractValidator<RemoveEmployeeCommand>
     {

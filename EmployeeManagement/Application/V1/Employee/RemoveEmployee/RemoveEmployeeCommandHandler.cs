@@ -1,10 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
 using EmployeeManagement.Repositories;
 using MediatR;
 
-namespace EmployeeManagement.Services.EmployeeManagement.Handlers
+namespace EmployeeManagement.Application.V1.Employee.RemoveEmployee
 {
     public class RemoveEmployeeCommandHandler : IRequestHandler<RemoveEmployeeCommand, bool>
     {

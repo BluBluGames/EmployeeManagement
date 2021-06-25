@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Commands;
+using EmployeeManagement.Application.V1.Employee.CreateEmployee;
+using EmployeeManagement.Application.V1.Employee.UpdateEmployee;
 using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Models;
 

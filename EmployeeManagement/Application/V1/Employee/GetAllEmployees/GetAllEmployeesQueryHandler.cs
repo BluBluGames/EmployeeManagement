@@ -2,13 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmployeeManagement.Contracts.V1.EmployeeManagement.Queries;
-using EmployeeManagement.Domain.Employees;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repositories;
 using MediatR;
 
-namespace EmployeeManagement.Services.EmployeeManagement.Handlers
+namespace EmployeeManagement.Application.V1.Employee.GetAllEmployees
 {
     public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, List<EmployeeResponse>>
     {
@@ -25,7 +23,7 @@ namespace EmployeeManagement.Services.EmployeeManagement.Handlers
         {
             var employees = await _employeeRepository.GetAllEmployeesAsync();
 
-            return employees == null ? null : _mapper.Map<IEnumerable<Employee>, List<EmployeeResponse>>(employees);
+            return employees == null ? null : _mapper.Map<IEnumerable<Domain.Employees.Employee>, List<EmployeeResponse>>(employees);
         }
     }
 }
